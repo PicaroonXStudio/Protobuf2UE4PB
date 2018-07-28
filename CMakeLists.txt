@@ -3,7 +3,7 @@ project (protoc-gen-ue4pb)
 
 set(CMAKE_CXX_FLAGS "-DPROTOBUF_USE_DLLS")
 
-include_directories("E:/Works/Github/ProtoBuf/src")
+include_directories("D:/Works/Github/ProtoBuf/src")
 
 file(GLOB helloworld_SRC
     "*.h"
