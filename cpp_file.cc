@@ -423,6 +423,8 @@ void FileGenerator::GenerateSource(io::Printer* printer) {
     enum_generators_[i]->GenerateMethods(printer);
   }
 
+  printer->Print(
+	  "  #define  PROTOBUF_INLINE_NOT_IN_HEADERS 0\n");
   // Generate classes.
   for (int i = 0; i < message_generators_.size(); i++) {
     printer->Print("\n");
@@ -989,7 +991,7 @@ void FileGenerator::GenerateTopHeaderGuard(io::Printer* printer,
 		"#endif" "\n" // _MSC_VER
 
 		"#ifdef _MSC_VER" "\n"
-		"#include \"AllowWindowsPlatformTypes.h\"" "\n"
+		"#include \"Windows/AllowWindowsPlatformTypes.h\"" "\n"
 		"#endif" "\n"
 		// End Add this for UE4
 
@@ -1102,7 +1104,7 @@ void FileGenerator::GenerateLibraryIncludes(io::Printer* printer) {
 	// Begin Add this for UE4
   printer->Print( "\n"
 	  "#ifdef _MSC_VER" "\n"
-	  "#include \"HideWindowsPlatformTypes.h\"" "\n"
+	  "#include \"Windows/HideWindowsPlatformTypes.h\"" "\n"
 	  "#endif" "\n\n");
 	// End Add this for UE4
 }
@@ -1250,6 +1252,10 @@ void FileGenerator::GenerateInlineFunctionDefinitions(io::Printer* printer) {
   //     GenerateDependentInlineMethods, even though they are not actually
   //     dependent.
 
+
+
+	printer->Print(
+		"  #define  PROTOBUF_INLINE_NOT_IN_HEADERS 0\n");
   printer->Print("#if !PROTOBUF_INLINE_NOT_IN_HEADERS\n");
   // TODO(gerbens) remove pragmas when gcc is no longer used. Current version
   // of gcc fires a bogus error when compiled with strict-aliasing.
